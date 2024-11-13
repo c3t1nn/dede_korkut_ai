@@ -1,8 +1,5 @@
+```markdown
 # Dede Korkut AI - İnteraktif Hikaye Deneyimi
-
-<p align="center">
-  <img src="demo.gif" alt="Dede Korkut AI Demo"/>
-</p>
 
 ## 📖 Proje Açıklaması
 "Dede Korkut'un İzinde: Yapay Zeka ile İnteraktif Maceralar", geleneksel Türk destanlarını modern teknoloji ile buluşturan interaktif bir web uygulamasıdır. Yapay zeka teknolojisi kullanılarak, kullanıcıların kendi seçimleriyle şekillenen özgün hikayeler oluşturulmasına olanak sağlar.
@@ -26,64 +23,37 @@
 ```bash
 git clone https://github.com/kullaniciadi/dede-korkut-ai.git
 cd dede-korkut-ai
- 
- 
+```
 
-    Gerekli paketleri yükleyin:
-     
-
-bash
- 
- 
- 
-1
+2. Gerekli paketleri yükleyin:
+```bash
 pip install -r requirements.txt
- 
- 
+```
 
-    .env dosyasını oluşturun:
-     
-
-env
- 
- 
- 
-1
+3. .env dosyasını oluşturun:
+```bash
 API_KEY=your_gemini_api_key
- 
- 
+```
 
-    Uygulamayı çalıştırın:
-     
-
-bash
- 
- 
- 
-1
+4. Uygulamayı çalıştırın:
+```bash
 python run.py
- 
- 
-🎯 Gelecek Özellikler 
+```
 
-    Türk tarihinden daha fazla karakter
-    Gelişmiş AI entegrasyonu  
-    Özelleştirilebilir karakter oluşturma
-    Müzik sistemi
-    Farklı tarihsel dönemler (Osmanlı, Ertuğrul vb.)
-     
+## 🎯 Gelecek Özellikler
+- [ ] Türk tarihinden daha fazla karakter
+- [ ] Gelişmiş AI entegrasyonu  
+- [ ] Özelleştirilebilir karakter oluşturma
+- [ ] Müzik sistemi
+- [ ] Farklı tarihsel dönemler (Osmanlı, Ertuğrul vb.)
 
-🤝 Katkıda Bulunma 
+## 🤝 Katkıda Bulunma
+Projeye katkıda bulunmak için Issue açabilir veya Pull Request gönderebilirsiniz.
 
-Projeye katkıda bulunmak için lütfen bir Issue açın veya Pull Request gönderin. 
-📝 Lisans 
+## 📝 Lisans
+Bu proje MIT lisansı altında lisanslanmıştır.
 
-Bu proje MIT  lisansı altında lisanslanmıştır. 
-📞 İletişim 
-
-    Proje Sahibi: Çetin Karakulak
-    E-posta: ckarakulak.mdbf17@iste.edu.tr
-     
+---
 <p align="center">
   Geliştirme aşamasındadır | 2024 ©️ Tüm hakları saklıdır
 </p>
