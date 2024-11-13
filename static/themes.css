@@ -1,0 +1,147 @@
+/* Karakter Tema Renkleri */
+.theme-bogac-han {
+    --theme-color: #CD853F;
+    --theme-color-light: rgba(205, 133, 63, 0.2);
+    --theme-gradient: linear-gradient(135deg, #8B4513, #CD853F);
+    --theme-shadow: rgba(205, 133, 63, 0.3);
+}
+
+.theme-deli-dumrul {
+    --theme-color: #4682B4;
+    --theme-color-light: rgba(70, 130, 180, 0.2);
+    --theme-gradient: linear-gradient(135deg, #2F4F4F, #4682B4);
+    --theme-shadow: rgba(70, 130, 180, 0.3);
+}
+
+.theme-bamsi-beyrek {
+    --theme-color: #556B2F;
+    --theme-color-light: rgba(85, 107, 47, 0.2);
+    --theme-gradient: linear-gradient(135deg, #2E8B57, #556B2F);
+    --theme-shadow: rgba(85, 107, 47, 0.3);
+}
+
+/* Loading Screen Tema Özellikleri */
+.theme-bogac-han .loading-symbol::before {
+    content: '🐂';
+    font-size: 2.5rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: bounceSymbol 2s ease infinite;
+}
+
+.theme-deli-dumrul .loading-symbol::before {
+    content: '🌉';
+    font-size: 2.5rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: swaySymbol 2s ease infinite;
+}
+
+.theme-bamsi-beyrek .loading-symbol::before {
+    content: '🐎';
+    font-size: 2.5rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: gallopSymbol 2s ease infinite;
+}
+
+/* Progress Bar Tema Stilleri */
+.theme-bogac-han .step-number.completed,
+.theme-bogac-han .progress-step.completed .step-connector {
+    background: var(--theme-gradient);
+}
+
+.theme-deli-dumrul .step-number.completed,
+.theme-deli-dumrul .progress-step.completed .step-connector {
+    background: var(--theme-gradient);
+}
+
+.theme-bamsi-beyrek .step-number.completed,
+.theme-bamsi-beyrek .progress-step.completed .step-connector {
+    background: var(--theme-gradient);
+}
+
+/* Seçenek Kartları Tema Efektleri */
+.theme-bogac-han .choice-card:hover {
+    box-shadow: 0 10px 30px var(--theme-shadow);
+}
+
+.theme-deli-dumrul .choice-card:hover {
+    box-shadow: 0 10px 30px var(--theme-shadow);
+}
+
+.theme-bamsi-beyrek .choice-card:hover {
+    box-shadow: 0 10px 30px var(--theme-shadow);
+}
+
+/* Karakter Özel Animasyonları */
+@keyframes bounceSymbol {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        transform: translate(-50%, -60%) scale(1.1);
+    }
+}
+
+@keyframes swaySymbol {
+    0%, 100% {
+        transform: translate(-50%, -50%) rotate(-5deg);
+    }
+    50% {
+        transform: translate(-50%, -50%) rotate(5deg);
+    }
+}
+
+@keyframes gallopSymbol {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    }
+    25% {
+        transform: translate(-60%, -50%) scale(1.1) rotate(-5deg);
+    }
+    75% {
+        transform: translate(-40%, -50%) scale(1.1) rotate(5deg);
+    }
+}
+
+/* Toast Bildirimleri Tema Renkleri */
+.theme-bogac-han .toast-progress::after {
+    background: var(--theme-gradient);
+}
+
+.theme-deli-dumrul .toast-progress::after {
+    background: var(--theme-gradient);
+}
+
+.theme-bamsi-beyrek .toast-progress::after {
+    background: var(--theme-gradient);
+}
+
+/* Story Card Tema Dekorasyonları */
+.theme-bogac-han .story-card-decoration {
+    background: var(--theme-gradient);
+}
+
+.theme-deli-dumrul .story-card-decoration {
+    background: var(--theme-gradient);
+}
+
+.theme-bamsi-beyrek .story-card-decoration {
+    background: var(--theme-gradient);
+}
+
+/* Responsive Tema Ayarlamaları */
+@media (max-width: 768px) {
+    .theme-bogac-han .story-progress,
+    .theme-deli-dumrul .story-progress,
+    .theme-bamsi-beyrek .story-progress {
+        background: var(--theme-color-light);
+    }
+}

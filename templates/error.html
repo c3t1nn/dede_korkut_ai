@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hata - Dede Korkut'un İzinde</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="error-container">
+            <h1>Bir Hata Oluştu</h1>
+            <p>{{ error }}</p>
+            <a href="/" class="nav-btn">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-text">Ana Sayfaya Dön</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

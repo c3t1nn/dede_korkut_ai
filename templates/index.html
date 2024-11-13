@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dede Korkut'un İzinde</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='themes.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Arkaplan videosu -->
+    <video id="backgroundVideo" class="background-video" loop muted playsinline>
+        <source src="{{ url_for('static', filename='videos/intro.mp4') }}" type="video/mp4">
+    </video>
+
+    <div class="container">
+        <header class="main-header">
+            <h1>Dede Korkut'un İzinde</h1>
+            <p class="subtitle">Destanını seç, hikayeni yarat</p>
+        </header>
+
+        <main>
+            <div class="character-cards">
+                <div class="character-card" data-character="Boğaç Han" data-video="bogac.mp4">
+                    <div class="card-content">
+                        <div class="card-header">
+                            <div class="character-icon">🐂</div>
+                            <h3>Boğaç Han</h3>
+                            <div class="character-title">Boğayla güreşip ad alan yiğit</div>
+                        </div>
+                        <div class="character-traits">
+                            <div class="trait-item">
+                                <span class="trait-icon">⚔️</span>
+                                <span>Gücüne güç katan alp eren</span>
+                            </div>
+                            <div class="trait-item">
+                                <span class="trait-icon">🏹</span>
+                                <span>Ok atmada usta</span>
+                            </div>
+                            <div class="trait-item">
+                                <span class="trait-icon">🐎</span>
+                                <span>At binmede mahir</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-overlay"></div>
+                </div>
+
+                <div class="character-card" data-character="Deli Dumrul" data-video="dumrul.mp4">
+                    <div class="card-content">
+                        <div class="card-header">
+                            <div class="character-icon">🌉</div>
+                            <h3>Deli Dumrul</h3>
+                            <div class="character-title">Azrail'e meydan okuyan gözü pek er</div>
+                        </div>
+                        <div class="character-traits">
+                            <div class="trait-item">
+                                <span class="trait-icon">💪</span>
+                                <span>Kuru çayın üstüne köprü kuran</span>
+                            </div>
+                            <div class="trait-item">
+                                <span class="trait-icon">⚡</span>
+                                <span>Gözü kara yiğit</span>
+                            </div>
+                            <div class="trait-item">
+                                <span class="trait-icon">❤️</span>
+                                <span>Can için can arayan er</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-overlay"></div>
+                </div>
+
+                <div class="character-card" data-character="Bamsı Beyrek" data-video="beyrek.mp4">
+                    <div class="card-content">
+                        <div class="card-header">
+                            <div class="character-icon">🐎</div>
+                            <h3>Bamsı Beyrek</h3>
+                            <div class="character-title">Boz aygırın sahibi, Pay Püre'nin yiğit oğlu</div>
+                        </div>
+                        <div class="character-traits">
+                            <div class="trait-item">
+                                <span class="trait-icon">🏹</span>
+                                <span>Ok atmada üstüne yok</span>
+                            </div>
+                            <div class="trait-item">
+                                <span class="trait-icon">⚔️</span>
+                                <span>Kılıç kuşanmada usta</span>
+                            </div>
+                            <div class="trait-item">
+                                <span class="trait-icon">💝</span>
+                                <span>Banu Çiçek'in sevdalısı</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-overlay"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const backgroundVideo = document.getElementById('backgroundVideo');
+            const cards = document.querySelectorAll('.character-card');
+
+            // Video yönetimi
+            function initVideo() {
+                backgroundVideo.play().catch(e => console.log("Video başlatılamadı:", e));
+                backgroundVideo.classList.add('loaded');
+            }
+
+            backgroundVideo.addEventListener('loadeddata', initVideo);
+            document.addEventListener('visibilitychange', () => {
+                if (document.visibilityState === 'visible') {
+                    initVideo();
+                }
+            });
+
+            // Video değiştirme fonksiyonu
+            function changeBackgroundVideo(videoName) {
+                const currentSrc = backgroundVideo.querySelector('source');
+                const newSrc = "{{ url_for('static', filename='videos/') }}" + videoName;
+                
+                backgroundVideo.classList.remove('loaded');
+                
+                setTimeout(() => {
+                    currentSrc.src = newSrc;
+                    backgroundVideo.load();
+                    backgroundVideo.play().then(() => {
+                        backgroundVideo.classList.add('loaded');
+                    }).catch(e => console.log("Video değiştirilemedi:", e));
+                }, 300);
+            }
+
+            // Kart etkileşimleri
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    const videoName = card.dataset.video;
+                    changeBackgroundVideo(videoName);
+                    
+                    cards.forEach(c => {
+                        if (c !== card) {
+                            c.style.opacity = '0.5';
+                        }
+                    });
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    cards.forEach(c => {
+                        c.style.opacity = '1';
+                    });
+                });
+
+                card.addEventListener('click', () => {
+                    const character = card.dataset.character;
+                    
+                    card.style.transform = 'scale(0.98)';
+                    
+                    setTimeout(() => {
+                        const form = document.createElement('form');
+                        form.method = 'POST';
+                        form.action = '/start_story';
+                        
+                        const input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = 'character';
+                        input.value = character;
+                        
+                        form.appendChild(input);
+                        document.body.appendChild(form);
+                        form.submit();
+                    }, 300);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

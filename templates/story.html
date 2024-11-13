@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ character }} - Dede Korkut'un İzinde</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='themes.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="theme-{{ character.lower().replace(' ', '-').replace('ğ', 'g').replace('ı', 'i') }}">
+    <!-- Arkaplan videosu -->
+    <video id="backgroundVideo" class="background-video" loop muted playsinline>
+        <source src="{{ url_for('static', filename='videos/' + character.lower().replace(' ', '_').replace('ğ', 'g').replace('ı', 'i') + '.mp4') }}" type="video/mp4">
+    </video>
+
+    <div class="container">
+        <header class="story-header">
+            <h1>{{ character }}</h1>
+        </header>
+
+        <main class="story-container">
+            <!-- Hikaye Bölümleri -->
+            {% for part in story_parts %}
+            <section class="story-card" data-part="{{ loop.index }}">
+                <div class="part-number">{{ loop.index }}</div>
+                <div class="story-content">
+                    {% for paragraph in part.text.split('\n') %}
+                        {% if paragraph.strip() %}
+                            <p>{{ paragraph | safe }}</p>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </section>
+
+            {% if loop.index < story_parts|length %}
+            <div class="choice-indicator">
+                <div class="choice-indicator-content">
+                    <div class="choice-indicator-icon">{{ story_parts[loop.index].previous_choice_emoji }}</div>
+                    <div class="choice-indicator-text">{{ story_parts[loop.index].previous_choice }}</div>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+
+            <!-- Seçenekler -->
+            {% if current_part.choices %}
+            <div class="choices-container">
+                {% for key, choice in current_part.choices.items() %}
+                <div class="choice-card" data-choice="{{ key }}">
+                    <div class="choice-content">
+                        <div class="choice-header">
+                            <div class="choice-icon">{{ choice.emoji }}</div>
+                            <h4 class="choice-title">{{ choice.text.title }}</h4>
+                        </div>
+                        <div class="choice-description">
+                            {{ choice.text.description }}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Kontrol Butonları -->
+            {% if current_part.stage == "conclusion" %}
+            <div class="story-controls">
+                <button onclick="saveStoryPDF()" class="control-btn save-btn">
+                    <span class="btn-icon">📜</span>
+                    <span class="btn-text">Destanı Kaydet</span>
+                    <span class="btn-subtitle">Bu destanı ebediyen sakla</span>
+                </button>
+                <button onclick="startNewStory()" class="control-btn new-story-btn">
+                    <span class="btn-icon">✨</span>
+                    <span class="btn-text">Yeni Bir Destan Başlat</span>
+                    <span class="btn-subtitle">Hey hey, hanım hey! Başka bir yiğidin destanını dinlemek ister misin?</span>
+                </button>
+            </div>
+            {% endif %}
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Video yönetimi
+            const backgroundVideo = document.getElementById('backgroundVideo');
+            
+            function initVideo() {
+                backgroundVideo.play().catch(e => console.log("Video başlatılamadı:", e));
+                backgroundVideo.classList.add('loaded');
+            }
+
+            backgroundVideo.addEventListener('loadeddata', initVideo);
+            document.addEventListener('visibilitychange', () => {
+                if (document.visibilityState === 'visible') {
+                    initVideo();
+                }
+            });
+
+            // Seçenek kartları
+            const choiceCards = document.querySelectorAll('.choice-card');
+            choiceCards.forEach(card => {
+                card.addEventListener('click', async () => {
+                    try {
+                        // Tüm kartları devre dışı bırak
+                        choiceCards.forEach(c => c.style.pointerEvents = 'none');
+                        
+                        // Seçilen kartı vurgula
+                        card.classList.add('selected');
+                        
+                        const form = document.createElement('form');
+                        form.method = 'POST';
+                        form.action = '/continue_story';
+                        
+                        const input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = 'choice';
+                        input.value = card.dataset.choice;
+                        
+                        form.appendChild(input);
+                        document.body.appendChild(form);
+                        
+                        await new Promise(resolve => setTimeout(resolve, 300));
+                        form.submit();
+                    } catch (error) {
+                        console.error("Seçim hatası:", error);
+                        card.classList.remove('selected');
+                        choiceCards.forEach(c => c.style.pointerEvents = 'auto');
+                    }
+                });
+            });
+        });
+
+        // PDF Kaydetme
+        async function saveStoryPDF() {
+            try {
+                const response = await fetch('/save_story_pdf', {
+                    method: 'POST'
+                });
+                
+                if (response.ok) {
+                    // Dosyayı indir
+                    const blob = await response.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = response.headers.get('Content-Disposition').split('filename=')[1].replace(/"/g, '');
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(a);
+                    
+                    // Başarı bildirimi göster
+                    alert("Destanınız başarıyla kaydedildi!");
+                } else {
+                    alert("Destan kaydedilemedi!");
+                }
+            } catch (error) {
+                console.error("PDF kaydetme hatası:", error);
+                alert("Bir hata oluştu!");
+            }
+        }
+
+        // Yeni Destan Başlatma
+        function startNewStory() {
+            const messages = [
+                "Hey hey, yeni bir destan başlıyor!",
+                "Mere, başka bir yiğidin hikayesini dinleyelim!",
+                "Hanım hey, yeni bir kahraman bizi bekliyor!"
+            ];
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            alert(randomMessage);
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,251 @@
+/* Temel Animasyonlar */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+}
+
+/* Loading Animasyonları */
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.95);
+        opacity: 0.5;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(0.95);
+        opacity: 0.5;
+    }
+}
+
+/* Karakter Sembolleri Animasyonları */
+@keyframes floatSymbol {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+/* Seçim Animasyonları */
+@keyframes rippleEffect {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+@keyframes selectGlow {
+    0% {
+        box-shadow: 0 0 5px var(--theme-color-light);
+    }
+    50% {
+        box-shadow: 0 0 20px var(--theme-color-light);
+    }
+    100% {
+        box-shadow: 0 0 5px var(--theme-color-light);
+    }
+}
+
+/* Hikaye Geçiş Animasyonları */
+@keyframes slideInRight {
+    from {
+        transform: translateX(100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Progress Bar Animasyonları */
+@keyframes progressFill {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes checkmark {
+    0% {
+        transform: scale(0);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Karakter Spesifik Animasyonlar */
+/* Boğaç Han */
+@keyframes bogacSymbol {
+    0% {
+        transform: scale(1) rotate(0deg);
+    }
+    50% {
+        transform: scale(1.2) rotate(5deg);
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+/* Deli Dumrul */
+@keyframes dumrulSymbol {
+    0% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(10px);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+/* Bamsı Beyrek */
+@keyframes beyrekSymbol {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-5px) rotate(5deg);
+    }
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+}
+
+/* Animasyon Sınıfları */
+.fade-in {
+    animation: fadeIn 0.5s ease forwards;
+}
+
+.fade-out {
+    animation: fadeOut 0.5s ease forwards;
+}
+
+.slide-in-right {
+    animation: slideInRight 0.5s ease forwards;
+}
+
+.slide-in-left {
+    animation: slideInLeft 0.5s ease forwards;
+}
+
+/* Loading Animasyon Sınıfları */
+.theme-bogac-han .character-symbol {
+    animation: bogacSymbol 2s ease infinite;
+}
+
+.theme-deli-dumrul .character-symbol {
+    animation: dumrulSymbol 2s ease infinite;
+}
+
+.theme-bamsi-beyrek .character-symbol {
+    animation: beyrekSymbol 2s ease infinite;
+}
+
+/* Seçim Efekt Sınıfları */
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--theme-color);
+    animation: rippleEffect 0.6s linear;
+    pointer-events: none;
+}
+
+.selected {
+    animation: selectGlow 1.5s ease infinite;
+}
+
+/* Progress Animasyon Sınıfları */
+.progress-fill {
+    animation: progressFill 1s ease forwards;
+}
+
+.checkmark-appear {
+    animation: checkmark 0.5s ease forwards;
+}
+
+/* Geçiş Gecikmeleri */
+.delay-1 {
+    animation-delay: 0.1s;
+}
+
+.delay-2 {
+    animation-delay: 0.2s;
+}
+
+.delay-3 {
+    animation-delay: 0.3s;
+}
+
+/* Hover Animasyonları */
+.hover-float {
+    transition: transform 0.3s ease;
+}
+
+.hover-float:hover {
+    transform: translateY(-5px);
+}
+
+.hover-glow {
+    transition: box-shadow 0.3s ease;
+}
+
+.hover-glow:hover {
+    box-shadow: 0 0 15px var(--theme-color-light);
+}
